@@ -50,7 +50,9 @@ function App() {
 
     return (
         <main className="flex flex-row justify-space-between">
-            Hello world
+            <h1 className="text-3xl font-bold underline">
+                Hello world!
+            </h1>
         </main>
     );
 }

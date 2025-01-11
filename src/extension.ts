@@ -6,13 +6,19 @@ export function activate(context: vscode.ExtensionContext) {
     const resolver = new CodeSnapViewResolver(context.extensionUri);
 
     const openSnippetCommand = vscode.commands.registerCommand("codesnapro.start", async () => {
-        //vscode.window.showErrorMessage(`Hi`);
+        const editor = vscode.window.activeTextEditor;
+
         const panel = vscode.window.createWebviewPanel(
             'codesnap',
             'CodeSnap 📸',
             { viewColumn: vscode.ViewColumn.Beside, preserveFocus: true },
         );
-        panel.webview
+        panel.webview.postMessage({
+            type: 'update', value: {
+                "content": editor?.selections
+            }
+        });
+        vscode.commands.executeCommand('editor.action.clipboardCopyWithSyntaxHighlightingAction');
         resolver.resolve(panel.webview);
     });
 
